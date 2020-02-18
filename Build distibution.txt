@@ -1,0 +1,13 @@
+
+
+Go to master
+sudo su - jenkins ===> reset password ===> genereate certificate by "ssh-keygen" ==> copy to slave machine by "ssh-copy-id"
+
+Slave
+create user jenkins===> set password for jenkins
+
+Login to Jenkins master GUI
+go to manage nodes ===> add nodes === update all details of slave and private key of master server and save 
+
+
+when you create a build you will find options for selecting slave server to use those builds

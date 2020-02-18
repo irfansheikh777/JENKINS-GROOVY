@@ -1,0 +1,99 @@
+Working with Artifacts and Fingerprints
+Introduction
+
+In this hands-on lab, we will be looking at working with artifacts and fingerprints. We will install the "copy artifact" plugin, and then we will pass artifacts between jobs.
+Solution
+
+To access the lab environment, log in as cloud_user, using the public IP address and login information provided in the Credentials section of the hands-on lab page.
+Create the webdev Folder and the index Project
+
+    Once logged in to the Jenkins Dashboard, click Manage Jenkins.
+    Click Global Tool Configuration.
+    Scroll down, and click Add Maven.
+    In the Name field type M3 for our instance configuration of Maven.
+    Click Save.
+    Navigate back to dashboard for Jenkins.
+    Click New Item.
+    In the Enter an item name field, create a folder named webdev.
+    Ensure that Folder is selected.
+    Click Ok.
+    Accept the defauls and click Save.
+    Look at the top breadcrumb navigation menu, to ensure that we're in the webdev folder.
+    Click Create a new jobs.
+    Inside the webdev folder make a freestyle project named index.
+    Ensure that Freestyle project is selected.
+    Click Ok.
+    Click the Source Code Management tab.
+    Click the radio button for Git.
+
+    In the Repository URL section, copy/paste the following link: https://github.com/linuxacademy/content-cje-prebuild.git
+
+    Note: Click outside the field to remove any red text.
+
+    Click the Build tab.
+    Under the Build section, select Invoke top-level Maven targets.
+    For the Maven Version enter M3.
+    For Goals input clean package.
+    Under the Execute shell section and in the Command field input bin/makeindex.
+    Under the Post-Build section, select Archive the artifacts.
+    In the Files to archive field, input index.jsp.
+    Click the Advanced... button and ensure that the radio button for Fingerprint all archived artifacts is also selected.
+    Click Save.
+    From the Project index file page, click Build Now on the left-hand side navigation menu.
+
+    Refresh the page, then click view for the index.jsp.
+
+    Note: We should see e.g. 'Hello the Tomcat server is running!'
+
+Install the Copy Artifact Plugin
+
+    Navigate to the main page Jenkins > Manage Jenkins > ManagePlugins
+    Click the Available tab.
+    Search for copy artifact in the upper-right hand side Filter field.
+    Click the radio button for Copy Artifact.
+    Click Download now and install after restart.
+    Click Restart Jenkins when installation is complete and no jobs are running.
+
+    Wait for Jenkins to restart.
+
+    Note: We may need to refresh and sign back in as student.
+
+Create and Build the tomcat Project
+
+    Navigate back to the main page for Jenkins.
+    Click New Item.
+    In the Enter an item name field_ input backend.
+    Ensure that Folder is selected.
+    Click OK.
+    Accept the defaults and click Save.
+    Ensure that we're on the backend folder via the breadcrumb navigation menu, then click on New Item.
+    In the Enter an item name field, input tomcat.
+    Ensure that Folder is selected.
+    Click OK.
+    Click the Source Code Management tab.
+    Click the radio button for Git.
+
+    Copy/paste the following: https://github/com/linuxacademy/content-jenkinscert.git in the Repository URL field.
+
+    Note: Click outside the field to remove any red text.
+
+    The first build step should be copying the artifact from the webdev/index job to src/main/webapp in the tomcat job.
+
+    From the Build tab, click Add build steps > Copy artifacts from another project.
+    For the Project name input webdev/index.
+    For the Artifacts to copy field input index.jsp.
+    For the Target directory field input src/main/webapp in the tomcat job.
+    Click Add build step > Invoke top-level Maven targets.
+    For the Maven Version enter M3.
+    For Goals input clean package.
+    Under the Post-Build Actions section, and Test report XMLs field type target/surefire-reports/*.xml
+    Click Save.
+    Click Build Now.
+
+    We can then view the test results and our tomcat project. From the Workspace of tomcat on master , we can click src > main > webapp and view to verify the index.jsp copied the message correctly.
+
+    Note: It may take a minute for the test results to generate.
+
+Conclusion
+
+Congratulations - you've completed this hands-on lab!
